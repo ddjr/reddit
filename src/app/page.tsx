@@ -1,9 +1,15 @@
+'use client'
 import Home from './pages/home'
-
-export default function App() {
+import { SessionProvider } from 'next-auth/react'
+type props = {
+	session?: any,
+}
+export default function App({ session }: props) {
 	return (
-		<div>
-			<Home />
-		</div>
+		<>
+			<SessionProvider session={session}>
+				<Home />
+			</SessionProvider>
+		</>
 	)
 }
