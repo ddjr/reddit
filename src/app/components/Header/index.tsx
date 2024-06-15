@@ -1,7 +1,6 @@
 import Image from 'next/image'
 import React from 'react'
 import Reddit_Logo from '../../images/reddit-logo.png'
-import User_Icon from '../../images/user-icon.webp'
 import {
 	BellIcon,
 	ChatBubbleBottomCenterIcon,
@@ -17,7 +16,9 @@ import {
 	MagnifyingGlassIcon,
 	Bars3Icon,
 } from '@heroicons/react/16/solid'
-import { signIn, useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react'
+import SignOut from '../SignOut'
+import SignIn from '../SignIn'
 
 export default function Header() {
 	const { data: session } = useSession()
@@ -25,7 +26,7 @@ export default function Header() {
 	return (
 		<div className='sticky-top-0 flex z-50 bg-white px-2 py-4 shadow-sm space-x-2'>
 			{/* Logo */}
-			<div className='relative h-10 w-20 flex-shrink-0 cursor-pointer '>
+			<div className='relative items-center w-20 flex-shrink-0 cursor-pointer'>
 				<Image objectFit='contain' src={Reddit_Logo} layout='fill' alt={''} />
 			</div>
 
@@ -51,7 +52,7 @@ export default function Header() {
 			<div>
 				<Bars3Icon className='icon inline-flex lg:hidden ' />
 			</div>
-			<div className='mx-5 text-gray-500 space-x-2 hidden lg:inline-flex'>
+			<div className='mx-5 text-gray-500 space-x-2 hidden lg:inline-flex items-center'>
 				<SparklesIcon className='icon' />
 				<GlobeAmericasIcon className='icon' />
 				<VideoCameraIcon className='icon' />
@@ -61,15 +62,8 @@ export default function Header() {
 				<PlusIcon className='icon' />
 				<SpeakerWaveIcon className='icon' />
 			</div>
-			<div
-				onClick={() => signIn()}
-				className='hidden cursor-pointer items-center space-x-2 border border-gray-100 p-2 lg:flex'
-			>
-				<div className='relative h-5 w-5 flex-shrink-0'>
-					<Image src={User_Icon} layout='fill' alt='' objectFit='contain' />
-				</div>
-				<p className='text-gray-500'>Sign In</p>
-			</div>
+
+			{session ? <SignOut /> : <SignIn />}
 		</div>
 	)
 }
